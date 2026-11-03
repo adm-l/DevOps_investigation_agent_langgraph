@@ -1,6 +1,6 @@
 from app.mcp_servers.common import create_server, run_server
 
-mcp = create_server("devops-kubernetes")
+mcp = create_server("devops-kubernetes", 8003)
 
 
 @mcp.tool()
@@ -17,4 +17,4 @@ def get_workload_status(namespace: str = "production", workload: str = "payment-
 
 
 if __name__ == "__main__":
-    run_server(mcp, 8003)
+    run_server(mcp)
