@@ -1,6 +1,6 @@
 from app.mcp_servers.common import create_server, run_server
 
-mcp = create_server("devops-database")
+mcp = create_server("devops-database", 8002)
 
 
 @mcp.tool()
@@ -15,4 +15,4 @@ def get_database_health(database_name: str = "orders") -> dict:
 
 
 if __name__ == "__main__":
-    run_server(mcp, 8002)
+    run_server(mcp)
