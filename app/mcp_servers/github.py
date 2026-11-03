@@ -1,6 +1,6 @@
 from app.mcp_servers.common import create_server, run_server
 
-mcp = create_server("devops-github")
+mcp = create_server("devops-github", 8004)
 
 
 @mcp.tool()
@@ -17,4 +17,4 @@ def get_recent_deployments(repository: str = "payments/api", limit: int = 5) -> 
 
 
 if __name__ == "__main__":
-    run_server(mcp, 8004)
+    run_server(mcp)
