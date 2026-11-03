@@ -1,6 +1,6 @@
 from app.mcp_servers.common import create_server, run_server
 
-mcp = create_server("devops-logs")
+mcp = create_server("devops-logs", 8001)
 LOGS = [
     {"timestamp": "2026-11-03T09:41:12Z", "service": "payment-service", "level": "ERROR", "message": "PostgreSQL pool acquisition timed out after 3000ms", "trace_id": "tr-1001"},
     {"timestamp": "2026-11-03T09:41:14Z", "service": "payment-service", "level": "WARN", "message": "Request latency exceeded 2500ms", "trace_id": "tr-1002"},
@@ -20,4 +20,4 @@ def search_logs(service_name: str, keyword: str = "", level: str = "", limit: in
 
 
 if __name__ == "__main__":
-    run_server(mcp, 8001)
+    run_server(mcp)
