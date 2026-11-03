@@ -93,7 +93,7 @@ async def investigate(payload: InvestigationRequest, request: Request):
     started = time.perf_counter()
     try:
         initial_state: InvestigationState = {
-            "messages": [HumanMessage(content=f"Service: {payload.service_name}\\nIssue: {payload.question}")],
+            "messages": [HumanMessage(content=f"Service: {payload.service_name}\nIssue: {payload.question}")],
             "service_name": payload.service_name,
             "investigation_id": investigation_id,
         }
