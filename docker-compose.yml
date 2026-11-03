@@ -1,0 +1,53 @@
+services:
+  api:
+    build: .
+    env_file: .env
+    environment:
+      MCP_LOGS_URL: http://logs-mcp:8001/mcp
+      MCP_DATABASE_URL: http://database-mcp:8002/mcp
+      MCP_KUBERNETES_URL: http://kubernetes-mcp:8003/mcp
+      MCP_GITHUB_URL: http://github-mcp:8004/mcp
+      OLLAMA_BASE_URL: http://host.docker.internal:11434
+    ports: ["8000:8000"]
+    extra_hosts: ["host.docker.internal:host-gateway"]
+    depends_on: [logs-mcp, database-mcp, kubernetes-mcp, github-mcp]
+    read_only: true
+    tmpfs: ["/tmp"]
+    security_opt: ["no-new-privileges:true"]
+    restart: unless-stopped
+  logs-mcp:
+    build: .
+    command: ["python", "-m", "app.mcp_servers.logs"]
+    environment: {MCP_HOST: "0.0.0.0", MCP_PORT: "8001"}
+    expose: ["8001"]
+    read_only: true
+    tmpfs: ["/tmp"]
+    security_opt: ["no-new-privileges:true"]
+    restart: unless-stopped
+  database-mcp:
+    build: .
+    command: ["python", "-m", "app.mcp_servers.database"]
+    environment: {MCP_HOST: "0.0.0.0", MCP_PORT: "8002"}
+    expose: ["8002"]
+    read_only: true
+    tmpfs: ["/tmp"]
+    security_opt: ["no-new-privileges:true"]
+    restart: unless-stopped
+  kubernetes-mcp:
+    build: .
+    command: ["python", "-m", "app.mcp_servers.kubernetes"]
+    environment: {MCP_HOST: "0.0.0.0", MCP_PORT: "8003"}
+    expose: ["8003"]
+    read_only: true
+    tmpfs: ["/tmp"]
+    security_opt: ["no-new-privileges:true"]
+    restart: unless-stopped
+  github-mcp:
+    build: .
+    command: ["python", "-m", "app.mcp_servers.github"]
+    environment: {MCP_HOST: "0.0.0.0", MCP_PORT: "8004"}
+    expose: ["8004"]
+    read_only: true
+    tmpfs: ["/tmp"]
+    security_opt: ["no-new-privileges:true"]
+    restart: unless-stopped
